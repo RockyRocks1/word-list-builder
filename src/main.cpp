@@ -7,6 +7,9 @@
 #include <optional>
 #include <array>
 #include <cstdlib>
+#include <format>
+#include <charconv>
+#include <vector>
 
 namespace fs = std::filesystem;
 
