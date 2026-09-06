@@ -1,0 +1,42 @@
+version: 1.0
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up CMake & Compilers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++
+
+      - name: Configure and Compile C++ Project
+        run: |
+          cmake -B out/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build out/build
+
+      - name: Run Executable in Dist Folder to Build Word List
+        run: |
+          cd out/build/dist/
+          chmod +x ./word_list_builder
+          ./word_list_builder
+
+      - name: Upload Finished JSON Asset to Latest Tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          files: out/build/dist/word_list.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

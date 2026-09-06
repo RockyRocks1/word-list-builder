@@ -21,7 +21,7 @@ struct AppConfig {
 		baseDir = GetDataRoot();
 		rawDir = baseDir / L"data" / L"raw";
 		blacklistDir = baseDir / L"data" / L"blacklist";
-		outDir = baseDir / L"dist";
+		outDir = baseDir;
 	}
 };
 struct WordLists {
