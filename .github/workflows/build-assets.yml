@@ -1,4 +1,4 @@
-version: 1.0
+name: Word List Builder
 
 on:
   push:
