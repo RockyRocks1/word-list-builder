@@ -35,10 +35,15 @@ jobs:
           chmod +x ./word_list_builder
           ./word_list_builder
 
-      - name: Upload Finished JSON Asset to Latest Tag
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: latest
-          files: out/build/dist/word_list.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       - name: Commit and Push Clean Asset
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          mkdir -p data/
+
+          cp out/build/dist/word_list.json data/word_list.json
+          
+          git add data/word_list.json || true
+          git commit -m "Auto-update word list [skip ci]" || true
+          git push
