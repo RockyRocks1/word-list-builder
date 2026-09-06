@@ -34,8 +34,9 @@ jobs:
           cd out/build/dist/
           chmod +x ./word_list_builder
           ./word_list_builder
+          cd ../../..
 
-       - name: Commit and Push Clean Asset
+      - name: Commit and Push Clean Asset
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
